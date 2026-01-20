@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.ksp)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

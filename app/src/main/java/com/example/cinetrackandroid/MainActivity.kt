@@ -17,8 +17,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.cinetrackandroid.ui.theme.CineTrackAndroidTheme
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import org.example.cinetrack.viewmodel.MovieViewModel
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +40,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 @Preview
-fun App(viewModel: MovieViewModel = viewModel()) {
+fun App(viewModel: MovieViewModel = viewModel() ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     MaterialTheme {
