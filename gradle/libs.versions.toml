@@ -32,7 +32,7 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 lifecycle-viewmodel-compose = {module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleVersion"}
 hilt-android = {module = "com.google.dagger:hilt-android", version.ref = "hiltVersion"}
 hilt-ksp = {module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltVersion"}
-hilt-navigation-compose = {module = "com.androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationVersion"}
+hilt-navigation-compose = {module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationVersion"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
