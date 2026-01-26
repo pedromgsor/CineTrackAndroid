@@ -11,12 +11,13 @@ import org.example.cinetrack.repository.MovieRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieViewModel @Inject constructor() : ViewModel() {
-    private val movieRepository = MovieRepository()
+class MovieViewModel @Inject constructor(
+    private val movieRepository: MovieRepository
+) : ViewModel() {
 
     val uiState: StateFlow<MovieUiState> =
         movieRepository.getMovies().map { movies -> MovieUiState(movies = movies) }.stateIn(
             viewModelScope,
-            SharingStarted.Eagerly, MovieUiState()
+            SharingStarted.WhileSubscribed(5000), MovieUiState() // Changed to WhileSubscribed
         )
 }
