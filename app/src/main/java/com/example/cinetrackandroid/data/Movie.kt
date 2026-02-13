@@ -1,4 +1,4 @@
-package org.example.cinetrack.data
+package com.example.cinetrackandroid.data
 
 data class Movie(
     val id: Int,

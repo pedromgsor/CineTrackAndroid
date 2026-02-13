@@ -1,4 +1,4 @@
-package org.example.cinetrack.data
+package com.example.cinetrackandroid.data
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

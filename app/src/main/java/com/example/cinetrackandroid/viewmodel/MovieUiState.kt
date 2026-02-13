@@ -1,6 +1,6 @@
-package org.example.cinetrack.viewmodel
+package com.example.cinetrackandroid.viewmodel
 
-import org.example.cinetrack.data.Movie
+import com.example.cinetrackandroid.data.Movie
 
 data class MovieUiState(
     val movies: List<Movie> = emptyList(),
