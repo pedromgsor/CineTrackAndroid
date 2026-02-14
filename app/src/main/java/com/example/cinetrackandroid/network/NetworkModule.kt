@@ -4,10 +4,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.create
+import com.example.cinetrackandroid.BuildConfig
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 
 @Module
 @InstallIn(SingletonComponent::class) // TODO Check Later
@@ -18,7 +20,8 @@ class NetworkModule {
             .addInterceptor { chain ->
                 val request = chain.request().newBuilder()
                     .addHeader("accept", "application/json")
-                    .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YjdiM2Y5MzhjMWYzM2E4NDM4N2VmNmViN2Q1YzI3YSIsIm5iZiI6MTc2OTI3MTA1OS44MTIsInN1YiI6IjY5NzRlZjEzYjU4NWQyYTQyNjFhMDU2NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1a_1Hzken6wlVAeG7NzhR7HF7Gf1DzrndZ2bv5nkH3c")
+                    .addHeader("Authorization", "Bearer ${BuildConfig.TMDB_BEARER_TOKEN}"
+                    )
                     .build()
                 chain.proceed(request)
             }
@@ -27,8 +30,10 @@ class NetworkModule {
 
     @Provides
     fun provideRetrofit(client: OkHttpClient): Retrofit {
+        val networkJson = Json { ignoreUnknownKeys = true }
         return Retrofit.Builder()
             .baseUrl("https://api.themoviedb.org/3/")
+            .addConverterFactory(networkJson.asConverterFactory("application/json".toMediaType()))
             .client(client)
             .build()
     }
