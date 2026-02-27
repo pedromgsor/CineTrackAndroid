@@ -10,18 +10,19 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import com.example.cinetrackandroid.BuildConfig
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
+import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class) // TODO Check Later
-class NetworkModule {
+@InstallIn(SingletonComponent::class)
+object NetworkModule {
     @Provides
+    @Singleton
     fun provideClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val request = chain.request().newBuilder()
                     .addHeader("accept", "application/json")
-                    .addHeader("Authorization", "Bearer ${BuildConfig.TMDB_BEARER_TOKEN}"
-                    )
+                    .addHeader("Authorization", "Bearer ${BuildConfig.TMDB_BEARER_TOKEN}")
                     .build()
                 chain.proceed(request)
             }
@@ -29,6 +30,7 @@ class NetworkModule {
     }
 
     @Provides
+    @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         val networkJson = Json { ignoreUnknownKeys = true }
         return Retrofit.Builder()
@@ -39,6 +41,7 @@ class NetworkModule {
     }
 
     @Provides
+    @Singleton
     fun provideService(retrofit: Retrofit): MovieService {
         return retrofit.create(MovieService::class.java)
     }
