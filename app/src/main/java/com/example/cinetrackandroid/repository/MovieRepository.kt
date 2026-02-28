@@ -1,15 +1,18 @@
 package com.example.cinetrackandroid.repository
 
-import kotlinx.coroutines.flow.Flow
 import com.example.cinetrackandroid.data.Movie
-import com.example.cinetrackandroid.data.MovieDataSource
+import com.example.cinetrackandroid.data.MovieRemoteDataSource
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(
-    private val movieDataSource: MovieDataSource
+    private val remoteDataSource: MovieRemoteDataSource,
 ) {
-    fun getMovies(): Flow<List<Movie>> = movieDataSource.movies
+    suspend fun getPopularMovies(): List<Movie> {
+        return remoteDataSource.getPopularMovies()
+    }
 
-    fun toggleFavorite(id: Int) = movieDataSource.toggleFavorite(id)
+    suspend fun getRecentMovies(): List<Movie> {
+        return remoteDataSource.getRecentMovies()
+    }
 
 }

@@ -5,6 +5,7 @@ data class Movie(
     val title: String,
     val overview: String,
     val rating: Double,
+    val popularity: Double,
     val releaseDate: String,
     val isFavorite: Boolean = false,
     val watchList: Boolean = false,
