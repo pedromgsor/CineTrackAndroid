@@ -2,15 +2,11 @@ package com.example.cinetrackandroid.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.cinetrackandroid.data.Movie
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import com.example.cinetrackandroid.repository.MovieRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -35,7 +31,7 @@ class MovieViewModel @Inject constructor(
         sort: SortOption
     ): List<Movie> {
         return when (sort) {
-            SortOption.POPULARITY -> movies.sortedBy { it.popularity}
+            SortOption.POPULARITY -> movies.sortedByDescending { it.popularity}
             SortOption.TITLE -> movies.sortedBy { it.title.lowercase() }
             SortOption.NEWEST -> movies.sortedByDescending { it.releaseDate }
             SortOption.OLDEST -> movies.sortedBy { it.releaseDate }
@@ -67,9 +63,11 @@ class MovieViewModel @Inject constructor(
 
     fun setSortOption(sortOption: SortOption) {
         _uiState.update { state ->
-            state.copy(sortOption = sortOption)
+            state.copy(sortOption = sortOption,
+                       movies = sortMovies(state.movies, sortOption)
+            )
         }
-        // Existing list only need to sort it
+        // Existing list only need to sort it, no need to load
     }
 
 
